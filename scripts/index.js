@@ -2,8 +2,6 @@ const content = document.querySelector('.content');
 const cardsContainer = content.querySelector('.places__list');
 const cardTemplate = document.querySelector('#card-template').content;
 const deleteButton = cardTemplate.querySelector('.card__delete-button')
-const createNewCard = content.querySelector('.profile__add-button');
-
 
 initialCards.forEach((el) => {
   createCard(el, deleteCard);
@@ -26,8 +24,3 @@ function createCard(element, deleteCard) {
   return cardElement;
 
 }
-
-
-createNewCard.addEventListener('click', function() {
-
-})
