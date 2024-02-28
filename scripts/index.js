@@ -1,7 +1,6 @@
 const content = document.querySelector('.content');
 const cardsContainer = content.querySelector('.places__list');
 const cardTemplate = document.querySelector('#card-template').content;
-const deleteButton = cardTemplate.querySelector('.card__delete-button')
 
 initialCards.forEach((el) => {
   createCard(el, deleteCard);
