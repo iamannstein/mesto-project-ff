@@ -1,24 +1,22 @@
-import { editProfilePopup, nameInput, jobInput, setDefaultValues } from './index';
-
 // Функция открытия модального окна
 function openModal(popup) {
   popup.classList.add('popup_is-animated');
   setTimeout(() => {popup.classList.add('popup_is-opened')}, 0);
+  document.addEventListener('keydown', closeModalByEsc); 
 }
 
 // Функция закрытия модального окна
 function closeModal(popup) {
-  popup.classList.remove('popup_is-opened');
   setTimeout(() => {popup.classList.remove('popup_is-animated')}, 600);
+  popup.classList.remove('popup_is-opened');
+  document.removeEventListener('keydown', closeModalByEsc); 
 }
 
 // Функция закрытия модального окна при нажатии на Escape
-function closeModalByEsc(evt, popup) {
+function closeModalByEsc(evt) {
   if (evt.key === 'Escape') {
-    closeModal(popup);
-    if (popup == editProfilePopup) {
-      setDefaultValues(nameInput, jobInput);
-    }
+    const openedPopup = document.querySelector('.popup_is-opened');
+    closeModal(openedPopup);
   }
 }
 
@@ -26,9 +24,6 @@ function closeModalByEsc(evt, popup) {
 function closeModalByClickOverlay(evt, popup) {
   if (evt.target.classList.contains('popup_is-opened')) {
     closeModal(popup);
-    if (popup == editProfilePopup) {
-      setDefaultValues(nameInput, jobInput);
-    }
   }
 }
 
