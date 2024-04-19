@@ -1,9 +1,9 @@
 .card__like-button {
+  display: grid;
   width: 21px;
-  height: 18px;
+  height: 40px;
   background: transparent url('../../../images/like-inactive.svg') no-repeat;
-  
-  background-size: 21px 18px;
+  background-size: 21px 16px;
   border: none;
   cursor: pointer;
   padding: 0;
