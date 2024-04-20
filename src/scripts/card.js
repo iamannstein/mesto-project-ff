@@ -28,8 +28,10 @@ function createCard(cardItem, deleteCard, addLikeCard, openImage, userId, delete
 
   if (userId === cardItem.owner._id) {
     deleteCardButton.addEventListener('click', function() { 
-      deleteCard(cardId);
-      deleteCardFromPage(cardElement)
+      deleteCard(cardId)
+      .then(()=> deleteCardFromPage(cardElement))
+      .catch((error) => console.log(error))
+      whoLiked.push(userId);
     });
   } else {
     deleteCardButton.disabled = true;
@@ -44,18 +46,20 @@ function createCard(cardItem, deleteCard, addLikeCard, openImage, userId, delete
  
   likeButton.addEventListener('click', function() { 
     if (!whoLiked.includes(userId)) {
-      likeButton.classList.add('card__like-button_is-active')
       addLikeCard(cardId)
       .then((cardData) => {
+        likeButton.classList.add('card__like-button_is-active')
         likesCount.textContent = cardData.likes.length
       })
+      .catch((error) => console.log(error))
       whoLiked.push(userId)
     } else {
-      likeButton.classList.remove('card__like-button_is-active')
       deleteLikeCard(cardId)
       .then((cardData) => {
+        likeButton.classList.remove('card__like-button_is-active')
         likesCount.textContent = cardData.likes.length
       })
+      .catch((error) => console.log(error))
       whoLiked = whoLiked.filter(id => id !== userId);
     }
    });

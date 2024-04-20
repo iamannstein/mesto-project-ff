@@ -77,9 +77,11 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
 
 function clearValidation(formElement, validationConfig) {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
+  const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
   inputList.forEach((inputElement) => {
     hideError(formElement, inputElement,  validationConfig.inputErrorClass, validationConfig.errorClass)
   });
+  toggleButtonState(inputList, buttonElement, validationConfig.inactiveButtonClass);
 }
 
 export { enableValidation, clearValidation }

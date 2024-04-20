@@ -43,11 +43,10 @@ const formElementForAvatar = document.querySelector('form[name="new-avatar"]');
 // Находим поле формы в DOM
 const urlInputForAvatar = formElementForAvatar.querySelector('.popup__input_type_url');
 
-
 let userId = null;
 
-Promise.all([getUserInfo(), getCards()])  
-  .then(([userData, cardsData]) => {
+Promise.all([ getUserInfo(), getCards() ])
+  .then(([ userData, cardsData ]) => {
     userId = userData._id;
     const userName = userData.name;
     const userDescription = userData.about;
@@ -141,13 +140,12 @@ function openImage(cardElement) {
 // и отправки данных
 // Обработчик «отправки» формы
 function handleFormSubmit(evt) {
-    evt.preventDefault();// Отменяем стандартную отправку формы.
-    const userData = {
-      name: nameInput.value,
-      about: jobInput.value};
-    const submitButton = editProfilePopup.querySelector('.popup__button');
-    showLoading(true, submitButton)
-    updateUserInfo(userData)
+  evt.preventDefault();// Отменяем стандартную отправку формы.
+  const userData = {
+    name: nameInput.value,
+    about: jobInput.value };
+  showLoading(true, evt.submitter)
+  updateUserInfo(userData)
     .then(() => {
       profileTitle.textContent = nameInput.value;
       profileDescription.textContent = jobInput.value;
@@ -157,7 +155,7 @@ function handleFormSubmit(evt) {
       console.log(err); // выводим ошибку в консоль
     })
     .finally(() => {
-      showLoading(false, submitButton);
+      showLoading(false, evt.submitter);
     });
 }
 // Прикрепляем обработчик к форме:
@@ -169,22 +167,21 @@ function handleFormSubmitForAddCard(evt) {
   const cardItem = {
     name: cardNameInput.value,
     link: urlInput.value };
-  const submitButton = addCardPopup.querySelector('.popup__button');
-  showLoading(true, submitButton); 
+  showLoading(true, evt.submitter); 
   addNewCard(cardItem)
-  .then((cardData) => { 
-    addNewCardtoPage(cardData)
-    // Очищаем поля ввода 
-    evt.target.reset();
-    // Закрываем модальное окно
-    closeModal(addCardPopup);
-  })
-  .catch((err) => {
-    console.log(err); // выводим ошибку в консоль
-  })
-  .finally(() => {
-    showLoading(false, submitButton);
-  });
+    .then((cardData) => { 
+      addNewCardtoPage(cardData)
+      // Очищаем поля ввода 
+      evt.target.reset();
+      // Закрываем модальное окно
+      closeModal(addCardPopup);
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    })
+    .finally(() => {
+      showLoading(false, evt.submitter);
+    });
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
@@ -193,22 +190,21 @@ formElementForCard.addEventListener('submit', handleFormSubmitForAddCard);
 function handleFormSubmitforUpdateAvatar(evt) {
   evt.preventDefault();// Отменяем стандартную отправку формы.
   const avatarUrl = urlInputForAvatar.value;
-  const submitButton = avatarPopup.querySelector('.popup__button');
-  showLoading(true, submitButton); 
+  showLoading(true, evt.submitter); 
   updateUserAvatar(avatarUrl)
-  .then(() => {
-    profileImage.style.backgroundImage = "url("+avatarUrl+")";
-    // Очищаем поля ввода 
-    evt.target.reset();
-    // Закрываем модальное окно
-    closeModal(avatarPopup);
-  })
-  .catch((err) => {
-    console.log(err); // выводим ошибку в консоль
-  })
-  .finally(() => {
-    showLoading(false, submitButton);
-  });
+    .then(() => {
+      profileImage.style.backgroundImage = "url("+avatarUrl+")";
+      // Очищаем поля ввода 
+      evt.target.reset();
+      // Закрываем модальное окно
+      closeModal(avatarPopup);
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    })
+    .finally(() => {
+      showLoading(false, evt.submitter);
+    });
 
 }
 // Прикрепляем обработчик к форме:
